@@ -116,7 +116,7 @@ El ejecutable resultante contendrá las carpetas `templates`, `static`, `json` y
 
 ---
 
-## 9. Manual de uso adicional
+## 9. Manual de uso adicional tinytuya
 
 ### Requisitos previos
 
