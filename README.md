@@ -4,6 +4,8 @@ Aplicación de escritorio (Windows) que permite **programar ciclos de encendido�
 Se ejecuta localmente con **Flask** (backend) y se muestra en una ventana **pywebview**; además incorpora un icono en la bandeja mediante **pystray**.
 
 ![image](https://github.com/user-attachments/assets/e5433efe-4fe4-45b3-8bf2-1c3b7b52efd4)
+![image](https://github.com/user-attachments/assets/dcd667e6-d7ff-45ac-8ea4-f062341c3a86)
+
 
 ---
 
