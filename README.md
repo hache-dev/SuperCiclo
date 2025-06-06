@@ -1,6 +1,6 @@
 # SuperCiclo
 
-Aplicación de escritorio (Windows, macOS y Linux) que permite **programar ciclos de encendido / apagado** sobre un enchufe inteligente Tuya.  
+Aplicación de escritorio (Windows) que permite **programar ciclos de encendido / apagado** sobre un enchufe inteligente Tuya.  
 Se ejecuta localmente con **Flask** (backend) y se muestra en una ventana **pywebview**; además incorpora un icono en la bandeja mediante **pystray**.
 
 ---
