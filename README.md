@@ -116,7 +116,7 @@ El ejecutable resultante contendrá las carpetas `templates`, `static`, `json` y
 
 ---
 
-## Manual de uso adicional
+## 9. Manual de uso adicional
 
 ### Requisitos previos
 
@@ -148,11 +148,10 @@ El ejecutable resultante contendrá las carpetas `templates`, `static`, `json` y
 
    ⚠️ **IMPORTANTE**: Para obtener el `device_id`, es necesario vincular el enchufe inteligente con la app oficial de Tuya (Smart Life o similar) y asegurarse de que esté conectado en la misma red local (LAN) que el servidor donde se ejecuta la app Flask.
 
----
 
 ---
 
-## 9. Licencia
+## 10. Licencia
 
 MIT. ¡Usalo, modificálo y compartí mejoras!  
 Autor: **h4ch3**
