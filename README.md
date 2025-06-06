@@ -113,6 +113,43 @@ El ejecutable resultante contendrá las carpetas `templates`, `static`, `json` y
 | Icono no aparece | Falta `trayicon.png`. | Verificá la ruta `static/img/`. |
 | Tiempo incorrecto | Zona horaria del sistema | Ajustar reloj de la PC / servidor |
 
+
+---
+
+## Manual de uso adicional
+
+### Requisitos previos
+
+1. **Instalar Python 3.9 o superior**  
+   Descargue Python desde [https://www.python.org/downloads/](https://www.python.org/downloads/) y asegúrese de seleccionar la opción **"Add Python to PATH"** durante la instalación.
+
+2. **Instalar dependencias necesarias**
+   ```bash
+   pip install flask tinytuya
+   ```
+
+3. **Obtener datos para `config.ini` con TinyTuya Wizard**
+   TinyTuya proporciona un asistente para detectar dispositivos inteligentes y extraer información como `device_id`, `local_key` y `ip`.
+
+   - Ejecute el asistente con:
+     ```bash
+     python -m tinytuya wizard
+     ```
+   - Siga las instrucciones para vincular el dispositivo inteligente (enchufe) a la red y obtener los datos necesarios.
+
+4. **Ejemplo de `config.ini`**
+   ```ini
+   [tuya]
+   device_id = your_device_id_here
+   device_ip = 192.168.x.x
+   local_key = your_local_key_here
+   version   = 3.4
+   ```
+
+   ⚠️ **IMPORTANTE**: Para obtener el `device_id`, es necesario vincular el enchufe inteligente con la app oficial de Tuya (Smart Life o similar) y asegurarse de que esté conectado en la misma red local (LAN) que el servidor donde se ejecuta la app Flask.
+
+---
+
 ---
 
 ## 9. Licencia
