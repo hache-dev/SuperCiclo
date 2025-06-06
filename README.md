@@ -3,7 +3,7 @@
 Aplicación de escritorio (Windows) que permite **programar ciclos de encendido / apagado** sobre un enchufe inteligente Tuya.  
 Se ejecuta localmente con **Flask** (backend) y se muestra en una ventana **pywebview**; además incorpora un icono en la bandeja mediante **pystray**.
 
-![SuperCiclo by h4ch3]("img/SuperCiclo by h4ch3.png")
+![image](https://github.com/user-attachments/assets/e5433efe-4fe4-45b3-8bf2-1c3b7b52efd4)
 
 ---
 
