@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8"/>
+    <title> SuperCiclo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+
+    <style>
+
+        td.on {
+        background-color: #198754;
+        color: white;
+         font-weight: bold;
+        }
+
+        td.off {
+        background-color: #6c757d;
+         color: white;
+        }
+
+        th, td {
+        text-align: center;
+        vertical-align: middle;
+        padding: 0.1rem;
+        font-size: 10px;
+        }
+        #particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* detrás del contenido */
+}
+
+
+    </style>
+</head>
+<body>
+<!-- Toast container (posición fija arriba-derecha) -->
+<div class="toast-container position-fixed top-0 start-50 translate-middle-x mt-3" id="toastArea"></div>
+<div id="particles-js"></div>
+<div class=" d-flex justify-content-center align-items-center min-vh-100">
+    <div class="container">
+        <div class="card text-white mx-auto small shadow" style="max-width: 400px;">
+            <div class="card-header d-flex justify-content-between align-items-center bg-dark text-white">
+                <h4 class="syne-mono-regular mb-0">
+                    <i class="bi bi-radioactive"></i> SuperCiclo
+                </h4>
+
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" id="dropdownTools"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-tools"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownTools">
+                        <li>
+    <a class="dropdown-item" href="#" onclick="abrirConfig()">
+        <i class="bi bi-gear"></i> Configuración
+    </a>
+</li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-info-circle"></i> Acerca de...</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div id="estadoContainer" class="shadow-sm">
+                    <div class="alert alert-info">
+                        <div class="spinner-border spinner-border-sm me-2" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        Esperando datos del SuperCiclo...
+                    </div>
+                </div>
+                <form id="scheduleForm">
+                    <div class="form-floating mb-2">
+                        <input type="time" class="form-control" id="horaInicio" value="00:00"
+                               placeholder="Hora Inicio Ciclo" step="3600" required/>
+                        <label for="horaInicio"><i class="bi bi-clock"></i> HS. INICIO SUPERCICLO</label>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <input type="number" class="form-control" id="horasOn" placeholder="Horas ON" required min="0.1"
+                               step="0.1" value="13"/>
+                        <label for="horasOn"><i class="bi bi-lightbulb-fill"></i> HS. ON</label>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <input type="number" class="form-control" id="horasOff" placeholder="Horas OFF" required
+                               min="0.1" step="0.1" value="13"/>
+                        <label for="horasOff"><i class="bi bi-lightbulb-off"></i> HS. OFF</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="diasReales" placeholder="Cantidad de días reales"
+                               required min="1" step="1" value="80"/>
+                        <label for="diasReales"><i class="bi bi-calendar2-event"></i> CICLO (días)</label>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-outline-info me-2"><i class="bi bi-radioactive"></i>
+                            Generar
+                        </button>
+                        <button type="button" class="btn btn-outline-success" onclick="iniciarCiclo()">
+                            <i class="bi bi-radioactive"></i> Ejecutar
+                        </button>
+
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <pre class="mb-0"><i class="bi bi-code"></i> c0ded by h4ch3 <i class="bi bi-code-slash"></i></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Matriz -->
+    <div class="modal fade" id="resultadoModal" tabindex="-1" aria-labelledby="resultadoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resultadoModalLabel"><i class="bi bi-calendar-range"></i> Calenadario
+                        SuperCiclo</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive" style="max-height: 500px;">
+                        <table class="table table-bordered table-sm table-dark" id="resultadoMatriz">
+                            <thead></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-outline-success ms-2" id="exportJson">Exportar <i
+                            class="bi bi-filetype-json"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / Modal Matriz -->
+
+</div>
+
+<script>
+    let eventosGenerados = [];
+    let cicloEnEjecucion = false;
+
+    function showToast(msg, type = "success", delay = 4000) {
+      const id = `toast-${Date.now()}`;
+      const html = `
+        <div id="${id}" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+            <i class="text-${type} bi bi-radioactive me-2"></i>
+            <strong class="me-auto">Notificación</strong>
+            <small>ahora</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+          </div>
+          <div class="toast-body">${msg}</div>
+        </div>`;
+      document.getElementById("toastArea").insertAdjacentHTML("beforeend", html);
+      new bootstrap.Toast(document.getElementById(id), { delay }).show();
+    }
+
+    function iniciarCiclo() {
+      if (cicloEnEjecucion) {
+        console.log("El ciclo ya está corriendo; no se reinicia.");
+        return;
+      }
+      fetch("/iniciar_ciclo", { method: "POST" })
+        .then(r => r.json())
+        .then(d => {
+          showToast(d.mensaje, d.exito ? "success" : "info");
+          if (d.exito) cicloEnEjecucion = true;
+        })
+        .catch(err => showToast("Error: " + err.message, "danger"));
+    }
+
+    document.getElementById("exportJson").addEventListener("click", async () => {
+      if (!eventosGenerados.length) return showToast("Primero genera el ciclo.", "warning");
+
+      try {
+        const horasOn = document.getElementById("horasOn").value;
+        const horasOff = document.getElementById("horasOff").value;
+        const superciclo = `${horasOn}h ON / ${horasOff}h OFF`;
+
+        const res = await fetch("/guardar-json", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            eventos: eventosGenerados,
+            superciclo: superciclo,
+          }),
+        });
+        const out = await res.json();
+        showToast(out.success ? "JSON guardado correctamente." : "Error: " + out.message,
+                  out.success ? "success" : "danger");
+      } catch (e) {
+        showToast("Error: " + e.message, "danger");
+      }
+    });
+
+
+    document.getElementById("scheduleForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const horaInicioStr = document.getElementById("horaInicio").value.trim();
+      const [hInicio, mInicio] = horaInicioStr.split(":").map(Number);
+      const inicioDecimal = hInicio + mInicio / 60;
+
+      const onHours = parseFloat(document.getElementById("horasOn").value);
+      const offHours = parseFloat(document.getElementById("horasOff").value);
+      const diasReales = parseInt(document.getElementById("diasReales").value);
+
+      const thead = document.querySelector("#resultadoMatriz thead");
+      const tbody = document.querySelector("#resultadoMatriz tbody");
+      thead.innerHTML = "";
+      tbody.innerHTML = "";
+      eventosGenerados = [];
+
+      const ciclo = onHours + offHours;
+      const totalHoras = diasReales * 24;
+
+      let header = "<tr><th>Día</th>";
+      for (let h = 0; h < 24; h++) header += `<th>${h.toString().padStart(2, "0")}:00</th>`;
+      header += "</tr>";
+      thead.innerHTML = header;
+
+      for (let dia = 0; dia < diasReales; dia++) {
+        let row = `<tr><th>${dia + 1}</th>`;
+        for (let h = 0; h < 24; h++) {
+          const horaAbs = dia * 24 + h;
+          const pos = (horaAbs - inicioDecimal + ciclo) % ciclo;
+          const estado = pos < onHours ? "on" : "off";
+          row += `<td class="${estado}">${estado.toUpperCase()}</td>`;
+        }
+        row += "</tr>";
+        tbody.innerHTML += row;
+      }
+
+      let horaActual = inicioDecimal;
+      while (horaActual < totalHoras + inicioDecimal) {
+        const dia = Math.floor(horaActual / 24);
+        const hora = horaActual % 24;
+        eventosGenerados.push({ accion: "ON", dia, hora: formatHour(hora) });
+        horaActual += onHours;
+        if (horaActual >= totalHoras + inicioDecimal) break;
+        const diaOff = Math.floor(horaActual / 24);
+        const horaOff = horaActual % 24;
+        eventosGenerados.push({ accion: "OFF", dia: diaOff, hora: formatHour(horaOff) });
+        horaActual += offHours;
+      }
+
+      new bootstrap.Modal("#resultadoModal").show();
+    });
+
+    function formatHour(decimal) {
+      const h = Math.floor(decimal);
+      const m = Math.round((decimal - h) * 60);
+      return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      fetch("/verificar_horarios")
+        .then((r) => r.json())
+        .then((data) => {
+          const cont = document.getElementById("estadoContainer");
+          if (data.existe) {
+            cont.innerHTML =
+              '<div class="alert alert-success">SuperCiclo encontrado y ejecutado automáticamente.</div>';
+            if (!data.ejecutando) iniciarCiclo();
+            else cicloEnEjecucion = true;
+          } else {
+            cont.innerHTML =
+              '<div class="alert alert-warning">No se encontró horarios.json</div>';
+          }
+        })
+        .catch((err) => {
+          console.error("Error verificando horarios:", err);
+          document.getElementById("estadoContainer").innerHTML =
+            '<div class="alert alert-danger">Error al verificar el ciclo.</div>';
+        });
+    });
+
+    setInterval(() => {
+      fetch("/estado_ciclo")
+        .then((r) => r.json())
+        .then((d) => {
+          document.getElementById("estadoContainer").innerHTML = `
+            <div class="alert alert-${d.estado === "on" ? "success" : "danger"}">
+              <h5 class="alert-heading">Info SuperCiclo...</h5>
+              <hr class="m-0 p-0">
+              <strong>SuperCiclo:</strong> ${d.superciclo}<br>
+              <strong>Estado actual:</strong> ${d.estado.toUpperCase()}<br>
+              <strong>Próximo estado:</strong> ${d.proximo}<br>
+              <strong>Hora:</strong> ${d.hora}
+            </div>`;
+        });
+    }, 5000);
+
+
+particlesJS("particles-js", {
+  "particles": {
+    "number": { "value": 100 },
+    "color": { "value": "#ffffff" },
+    "shape": { "type": "circle" },
+    "opacity": { "value": 0.2 },
+    "size": { "value": 3 },
+    "line_linked": {
+      "enable": true,
+      "distance": 150,
+      "color": "#ffffff",
+      "opacity": 0.4,
+      "width": 1
+    },
+    "move": { "enable": true, "speed": 2 }
+  }
+});
+
+    function abrirConfig() {
+  fetch("/config-ini", { method: "POST" })
+    .then(r => r.json())
+    .then(d => {
+      if (d.ok) {
+        showToast(
+          "Se abrió <code>config.ini</code>. <br>Reinicia la aplicación para aplicar cambios.",
+          "info"
+        );
+      } else {
+        showToast("Error al abrir config.ini: " + d.error, "danger");
+      }
+    })
+    .catch(err => showToast("Error: " + err.message, "danger"));
+}
+
+
+</script>
+
+
+</body>
+</html>
