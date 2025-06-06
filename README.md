@@ -34,7 +34,7 @@ pip install flask pywebview pystray pillow tinytuya configparser
 ## 3. Instalación rápida
 
 ```bash
-git clone https://github.com/tu_usuario/superciclo.git
+git clone [https://github.com/tu_usuario/superciclo.git](https://github.com/hache-dev/SuperCiclo.git)
 cd superciclo
 python -m venv venv
 venv\Scripts\activate  # Linux/Mac: source venv/bin/activate
@@ -85,6 +85,7 @@ superciclo/
 
 La sección *Info SuperCiclo* muestra:
 
+* **SuperCiclo** (HS ON / HS OFF)
 * **Estado actual** (ON / OFF)
 * **Próximo estado** (fecha‑hora del próximo cambio)
 * **Hora** local del sistema
