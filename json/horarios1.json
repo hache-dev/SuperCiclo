@@ -1,0 +1,745 @@
+{
+  "eventos": [
+    {
+      "accion": "ON",
+      "dia": 0,
+      "hora": "13:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 1,
+      "hora": "02:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 1,
+      "hora": "15:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 2,
+      "hora": "04:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 2,
+      "hora": "17:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 3,
+      "hora": "06:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 3,
+      "hora": "19:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 4,
+      "hora": "08:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 4,
+      "hora": "21:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 5,
+      "hora": "10:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 5,
+      "hora": "23:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 6,
+      "hora": "12:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 7,
+      "hora": "01:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 7,
+      "hora": "14:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 8,
+      "hora": "03:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 8,
+      "hora": "16:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 9,
+      "hora": "05:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 9,
+      "hora": "18:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 10,
+      "hora": "07:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 10,
+      "hora": "20:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 11,
+      "hora": "09:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 11,
+      "hora": "22:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 12,
+      "hora": "11:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 13,
+      "hora": "00:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 13,
+      "hora": "13:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 14,
+      "hora": "02:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 14,
+      "hora": "15:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 15,
+      "hora": "04:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 15,
+      "hora": "17:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 16,
+      "hora": "06:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 16,
+      "hora": "19:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 17,
+      "hora": "08:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 17,
+      "hora": "21:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 18,
+      "hora": "10:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 18,
+      "hora": "23:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 19,
+      "hora": "12:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 20,
+      "hora": "01:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 20,
+      "hora": "14:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 21,
+      "hora": "03:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 21,
+      "hora": "16:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 22,
+      "hora": "05:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 22,
+      "hora": "18:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 23,
+      "hora": "07:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 23,
+      "hora": "20:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 24,
+      "hora": "09:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 24,
+      "hora": "22:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 25,
+      "hora": "11:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 26,
+      "hora": "00:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 26,
+      "hora": "13:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 27,
+      "hora": "02:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 27,
+      "hora": "15:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 28,
+      "hora": "04:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 28,
+      "hora": "17:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 29,
+      "hora": "06:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 29,
+      "hora": "19:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 30,
+      "hora": "08:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 30,
+      "hora": "21:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 31,
+      "hora": "10:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 31,
+      "hora": "23:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 32,
+      "hora": "12:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 33,
+      "hora": "01:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 33,
+      "hora": "14:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 34,
+      "hora": "03:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 34,
+      "hora": "16:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 35,
+      "hora": "05:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 35,
+      "hora": "18:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 36,
+      "hora": "07:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 36,
+      "hora": "20:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 37,
+      "hora": "09:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 37,
+      "hora": "22:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 38,
+      "hora": "11:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 39,
+      "hora": "00:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 39,
+      "hora": "13:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 40,
+      "hora": "02:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 40,
+      "hora": "15:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 41,
+      "hora": "04:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 41,
+      "hora": "17:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 42,
+      "hora": "06:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 42,
+      "hora": "19:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 43,
+      "hora": "08:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 43,
+      "hora": "21:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 44,
+      "hora": "10:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 44,
+      "hora": "23:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 45,
+      "hora": "12:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 46,
+      "hora": "01:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 46,
+      "hora": "14:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 47,
+      "hora": "03:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 47,
+      "hora": "16:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 48,
+      "hora": "05:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 48,
+      "hora": "18:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 49,
+      "hora": "07:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 49,
+      "hora": "20:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 50,
+      "hora": "09:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 50,
+      "hora": "22:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 51,
+      "hora": "11:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 52,
+      "hora": "00:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 52,
+      "hora": "13:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 53,
+      "hora": "02:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 53,
+      "hora": "15:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 54,
+      "hora": "04:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 54,
+      "hora": "17:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 55,
+      "hora": "06:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 55,
+      "hora": "19:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 56,
+      "hora": "08:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 56,
+      "hora": "21:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 57,
+      "hora": "10:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 57,
+      "hora": "23:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 58,
+      "hora": "12:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 59,
+      "hora": "01:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 59,
+      "hora": "14:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 60,
+      "hora": "03:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 60,
+      "hora": "16:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 61,
+      "hora": "05:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 61,
+      "hora": "18:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 62,
+      "hora": "07:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 62,
+      "hora": "20:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 63,
+      "hora": "09:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 63,
+      "hora": "22:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 64,
+      "hora": "11:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 65,
+      "hora": "00:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 65,
+      "hora": "13:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 66,
+      "hora": "02:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 66,
+      "hora": "15:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 67,
+      "hora": "04:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 67,
+      "hora": "17:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 68,
+      "hora": "06:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 68,
+      "hora": "19:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 69,
+      "hora": "08:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 69,
+      "hora": "21:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 70,
+      "hora": "10:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 70,
+      "hora": "23:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 71,
+      "hora": "12:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 72,
+      "hora": "01:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 72,
+      "hora": "14:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 73,
+      "hora": "03:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 73,
+      "hora": "16:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 74,
+      "hora": "05:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 74,
+      "hora": "18:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 75,
+      "hora": "07:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 75,
+      "hora": "20:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 76,
+      "hora": "09:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 76,
+      "hora": "22:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 77,
+      "hora": "11:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 78,
+      "hora": "00:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 78,
+      "hora": "13:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 79,
+      "hora": "02:00"
+    },
+    {
+      "accion": "ON",
+      "dia": 79,
+      "hora": "15:00"
+    },
+    {
+      "accion": "OFF",
+      "dia": 80,
+      "hora": "04:00"
+    }
+  ],
+  "superciclo": "13h ON / 13h OFF"
+}

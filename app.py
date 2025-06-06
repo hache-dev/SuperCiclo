@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_from_directory
 from datetime import datetime, timedelta
 from pathlib import Path
 import os
@@ -11,9 +11,13 @@ import platform
 
 app = Flask(__name__)
 
-CONFIG_PATH = "config.ini"
-JSON_FOLDER = "json"
 
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(app.static_folder, 'favicon.ico')
+
+
+CONFIG_PATH = "config.ini"
 cfg = configparser.ConfigParser()
 cfg.read(CONFIG_PATH, encoding="utf-8")
 
@@ -21,6 +25,9 @@ TUYA_ID = cfg.get("tuya", "device_id", fallback="")
 TUYA_IP = cfg.get("tuya", "device_ip", fallback="")
 TUYA_KEY = cfg.get("tuya", "local_key", fallback="")
 TUYA_VERSION = cfg.getfloat("tuya", "version", fallback=3.4)
+
+JSON_FOLDER = "json"
+os.makedirs(JSON_FOLDER, exist_ok=True)
 
 estado_actual = {"estado": "desconocido", "proximo": "", "hora": ""}
 ciclo_en_ejecucion = False
@@ -69,7 +76,6 @@ def superciclo(horarios):
 
     ciclo_en_ejecucion = True
 
-    # ← toma los valores del .ini
     enchufe = tinytuya.OutletDevice(TUYA_ID, TUYA_IP, TUYA_KEY)
     enchufe.set_version(TUYA_VERSION)
 

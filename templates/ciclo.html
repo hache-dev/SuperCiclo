@@ -2,11 +2,13 @@
 <html lang="es" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8"/>
-    <title> SuperCiclo</title>
+    <title> SuperCiclo by h4ch3 </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
 
 
     <style>
@@ -37,11 +39,10 @@
   z-index: -1; /* detrás del contenido */
 }
 
-
     </style>
 </head>
 <body>
-<!-- Toast container (posición fija arriba-derecha) -->
+
 <div class="toast-container position-fixed top-0 start-50 translate-middle-x mt-3" id="toastArea"></div>
 <div id="particles-js"></div>
 <div class=" d-flex justify-content-center align-items-center min-vh-100">
@@ -59,11 +60,16 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownTools">
                         <li>
-    <a class="dropdown-item" href="#" onclick="abrirConfig()">
-        <i class="bi bi-gear"></i> Configuración
-    </a>
-</li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-info-circle"></i> Acerca de...</a></li>
+                            <a class="dropdown-item" href="#" onclick="abrirConfig()">
+                                <i class="bi bi-gear"></i> Configuración
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalAcercaDe">
+                                <i class="bi bi-info-circle"></i> Acerca de...
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -142,6 +148,38 @@
         </div>
     </div>
     <!-- / Modal Matriz -->
+
+    <div class="modal fade" id="modalAcercaDe" tabindex="-1" aria-labelledby="modalAcercaDeLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAcercaDeLabel">Acerca de ...</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+
+                </div>
+                <div class="modal-body">
+ <pre class="text-center border p-2 rounded shadow">
+$$\       $$\   $$\           $$\        $$$$$$\
+$$ |      $$ |  $$ |          $$ |      $$ ___$$\
+$$$$$$$\  $$ |  $$ | $$$$$$$\ $$$$$$$\  \_/   $$ |
+$$  __$$\ $$$$$$$$ |$$  _____|$$  __$$\   $$$$$ /
+$$ |  $$ |\_____$$ |$$ /      $$ |  $$ |  \___$$\
+$$ |  $$ |      $$ |$$ |      $$ |  $$ |$$\   $$ |
+$$ |  $$ |      $$ |\$$$$$$$\ $$ |  $$ |\$$$$$$  |
+\__|  \__|      \__| \_______|\__|  \__| \______/
+</pre>
+Nombre: SuperCiclo by h4ch3 <br>
+Descripción: Aplicación de escritorio (Windows) que permite programar ciclos de encendido / apagado sobre un enchufe inteligente Tuya. <br>
+Versión: 1.0 <br>
+Desarrollador: h4ch3
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
