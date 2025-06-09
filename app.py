@@ -26,11 +26,9 @@ if not os.path.isfile(CONFIG_PATH):
 
 cfg.read(CONFIG_PATH, encoding="utf-8")
 
-# Verifica si la sección 'tuya' está presente
 if not cfg.has_section("tuya"):
     raise ValueError(f"[ERROR] El archivo {CONFIG_PATH} no contiene la sección [tuya]")
 
-# Ahora ya puedes acceder con seguridad a las claves:
 TUYA_ID = cfg.get("tuya", "device_id")
 TUYA_IP = cfg.get("tuya", "device_ip")
 TUYA_KEY = cfg.get("tuya", "local_key")
