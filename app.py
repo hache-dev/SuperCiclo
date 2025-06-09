@@ -20,12 +20,22 @@ def favicon():
 
 CONFIG_PATH = "config.ini"
 cfg = configparser.ConfigParser()
+
+if not os.path.isfile(CONFIG_PATH):
+    raise FileNotFoundError(f"[ERROR] No se encontró el archivo de configuración: {CONFIG_PATH}")
+
 cfg.read(CONFIG_PATH, encoding="utf-8")
 
-TUYA_ID = cfg.get("tuya", "device_id", fallback="")
-TUYA_IP = cfg.get("tuya", "device_ip", fallback="")
-TUYA_KEY = cfg.get("tuya", "local_key", fallback="")
-TUYA_VERSION = cfg.getfloat("tuya", "version", fallback=3.4)
+# Verifica si la sección 'tuya' está presente
+if not cfg.has_section("tuya"):
+    raise ValueError(f"[ERROR] El archivo {CONFIG_PATH} no contiene la sección [tuya]")
+
+# Ahora ya puedes acceder con seguridad a las claves:
+TUYA_ID = cfg.get("tuya", "device_id")
+TUYA_IP = cfg.get("tuya", "device_ip")
+TUYA_KEY = cfg.get("tuya", "local_key")
+TUYA_VERSION = cfg.getfloat("tuya", "version")
+
 
 JSON_FOLDER = "json"
 os.makedirs(JSON_FOLDER, exist_ok=True)
@@ -79,36 +89,6 @@ def cargar_horarios():
         return None
 
 
-"""
-def construir_eventos_abs(data, ahora):
-    ref = data.get("fecha_inicio") or ahora.replace(hour=0, minute=0, second=0, microsecond=0)
-
-    # Asegurarnos que ref sea datetime, puede venir como str si no se parseó antes
-    if isinstance(ref, str):
-        ref = datetime.fromisoformat(ref)
-
-    eventos_abs = []
-
-    for ev in data["eventos"]:
-        h, m = map(int, ev["hora"].split(":"))
-        dt = ref + timedelta(days=ev["dia"], hours=h, minutes=m)
-
-        # Si dt está muy atrás, sumamos semanas para llevarlo cerca del ahora
-        while dt < ahora - timedelta(days=7):
-            dt += timedelta(days=7)
-
-        eventos_abs.append((ev["accion"].lower(), dt))
-
-    # Generamos eventos para 3 semanas para cubrir el ciclo
-    eventos_ext = []
-    for i in range(3):
-        for accion, dt in eventos_abs:
-            eventos_ext.append((accion, dt + timedelta(days=7 * i)))
-
-    eventos_ext.sort(key=lambda x: x[1])
-
-    return eventos_ext
-"""
 
 
 def construir_eventos_abs(data, ahora):
