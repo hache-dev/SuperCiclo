@@ -1,6 +1,6 @@
+import logging
 from flask import Flask, request, jsonify, render_template, send_from_directory
 from datetime import datetime, timedelta
-from pathlib import Path
 import os
 import json
 import threading
@@ -10,8 +10,20 @@ import configparser
 import platform
 import subprocess
 
-app = Flask(__name__)
+# Configurar logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='[%(asctime)s] %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler("superciclo.log", encoding="utf-8"),
+        logging.StreamHandler()
+    ]
+)
 
+# Silenciar logs de Werkzeug para peticiones HTTP
+logging.getLogger('werkzeug').setLevel(logging.WARNING)
+
+app = Flask(__name__)
 
 @app.route('/favicon.ico')
 def favicon():
@@ -22,18 +34,19 @@ CONFIG_PATH = "config.ini"
 cfg = configparser.ConfigParser()
 
 if not os.path.isfile(CONFIG_PATH):
+    logging.error(f"No se encontró el archivo de configuración: {CONFIG_PATH}")
     raise FileNotFoundError(f"[ERROR] No se encontró el archivo de configuración: {CONFIG_PATH}")
 
 cfg.read(CONFIG_PATH, encoding="utf-8")
 
 if not cfg.has_section("tuya"):
+    logging.error(f"El archivo {CONFIG_PATH} no contiene la sección [tuya]")
     raise ValueError(f"[ERROR] El archivo {CONFIG_PATH} no contiene la sección [tuya]")
 
 TUYA_ID = cfg.get("tuya", "device_id")
 TUYA_IP = cfg.get("tuya", "device_ip")
 TUYA_KEY = cfg.get("tuya", "local_key")
 TUYA_VERSION = cfg.getfloat("tuya", "version")
-
 
 JSON_FOLDER = "json"
 os.makedirs(JSON_FOLDER, exist_ok=True)
@@ -69,8 +82,10 @@ def guardar_json():
                 "fecha_inicio": fecha_inicio
             }, f, ensure_ascii=False, indent=2)
 
+        logging.info("Archivo horarios.json guardado correctamente.")
         return jsonify({"success": True})
     except Exception as e:
+        logging.exception("Error al guardar el archivo JSON")
         return jsonify({"success": False, "message": str(e)})
 
 
@@ -83,10 +98,8 @@ def cargar_horarios():
                 data["fecha_inicio"] = datetime.fromisoformat(data["fecha_inicio"])
             return data
     except Exception as e:
-        print(f"[ERROR] al cargar horarios.json: {e}")
+        logging.exception("Error al cargar horarios.json")
         return None
-
-
 
 
 def construir_eventos_abs(data, ahora):
@@ -95,33 +108,31 @@ def construir_eventos_abs(data, ahora):
     if isinstance(ref, str):
         ref = datetime.fromisoformat(ref)
 
-    # 1. Construimos todos los eventos absolutos iniciales
     eventos_base = []
+    dias_def = [ev.get("dia") for ev in data.get("eventos", []) if isinstance(ev.get("dia"), int)]
+    duracion_superciclo = max(dias_def) + 1 if dias_def else 1  # Evitar división por cero
+
     for ev in data["eventos"]:
         h, m = map(int, ev["hora"].split(":"))
-        dt = ref + timedelta(days=ev["dia"], hours=h, minutes=m)
+        dia = ev.get("dia", 0)
+        dt = ref + timedelta(days=dia, hours=h, minutes=m)
         eventos_base.append((ev["accion"].lower(), dt))
 
-    # 2. Determinamos el horizonte temporal necesario
     fecha_mas_lejana = max(dt for _, dt in eventos_base)
-    horizonte = max(
-        (fecha_mas_lejana - ahora).days + 7,  # Cubrir el evento más lejano
-        14  # Mínimo 2 semanas de horizonte por seguridad
-    )
+    horizonte = max((fecha_mas_lejana - ahora).days + duracion_superciclo, duracion_superciclo * 2)
 
-    # 3. Generamos eventos recurrentes hasta cubrir el horizonte
     eventos_ext = []
     for accion, dt in eventos_base:
         current_dt = dt
         while (current_dt - ahora).days <= horizonte:
-            if current_dt >= ahora - timedelta(days=1):  # Ignorar eventos muy pasados
+            if current_dt >= ahora - timedelta(days=1):
                 eventos_ext.append((accion, current_dt))
-            current_dt += timedelta(days=7)
+            current_dt += timedelta(days=duracion_superciclo)  # ✅ incremento flexible
 
-    # 4. Ordenamos todos los eventos
     eventos_ext.sort(key=lambda x: x[1])
-
     return eventos_ext
+
+
 
 
 def superciclo(data):
@@ -132,6 +143,7 @@ def superciclo(data):
     enchufe.set_version(TUYA_VERSION)
 
     estado_previo = None
+    logging.info("Iniciando ejecución de superciclo...")
 
     while ciclo_en_ejecucion:
         ahora = datetime.now()
@@ -142,10 +154,12 @@ def superciclo(data):
             try:
                 if accion_actual == "on":
                     enchufe.turn_on()
+                    logging.info("Enchufe encendido")
                 else:
                     enchufe.turn_off()
+                    logging.info("Enchufe apagado")
             except Exception as e:
-                print(f"[ERROR] Controlando enchufe: {e}")
+                logging.exception("Error controlando el enchufe")
 
         estado_actual.update(
             estado=accion_actual,
@@ -155,6 +169,7 @@ def superciclo(data):
         time.sleep(30)
 
     ciclo_en_ejecucion = False
+    logging.info("Ciclo detenido.")
 
 
 @app.route("/iniciar_ciclo", methods=["POST"])
@@ -163,6 +178,7 @@ def iniciar_ciclo():
 
     nuevos_horarios = cargar_horarios()
     if nuevos_horarios is None:
+        logging.error("No se pudo cargar horarios.json")
         return jsonify({"mensaje": "No se pudo cargar horarios.json"})
 
     if ciclo_en_ejecucion and nuevos_horarios == horarios_actuales:
@@ -174,7 +190,43 @@ def iniciar_ciclo():
 
     horarios_actuales = nuevos_horarios
 
-    ciclo_thread = threading.Thread(target=superciclo, args=(nuevos_horarios,))  # ✅ pasamos argumento
+    ahora = datetime.now()
+    estado, proximo_dt = calcular_estado_y_proximo(nuevos_horarios, ahora)
+
+    dias_def = [e.get("dia") for e in nuevos_horarios.get("eventos", []) if isinstance(e.get("dia"), int)]
+    duracion_superciclo = max(dias_def) + 1 if dias_def else 0
+
+    raw_inicio = nuevos_horarios.get("fecha_inicio")
+    if isinstance(raw_inicio, datetime):
+        fecha_inicio = raw_inicio.date()
+    elif isinstance(raw_inicio, str):
+        try:
+            fecha_inicio = datetime.fromisoformat(raw_inicio).date()
+        except ValueError:
+            fecha_inicio = None
+    else:
+        fecha_inicio = None
+
+    if duracion_superciclo and fecha_inicio:
+        dias_transcurridos = (ahora.date() - fecha_inicio).days
+        dia_actual = (dias_transcurridos % duracion_superciclo) + 1
+        dias_restantes = duracion_superciclo - dia_actual
+    else:
+        dia_actual = "--"
+        dias_restantes = "--"
+
+    logging.info(
+        f"""Info SuperCiclo...
+    SuperCiclo: {nuevos_horarios.get('superciclo', '--')}
+    Día: {dia_actual}
+    Días restantes: {dias_restantes}
+    Estado actual: {estado.upper()}
+    Próximo estado: {proximo_dt.strftime('%Y-%m-%d %H:%M') if proximo_dt else '--'}
+    Hora: {ahora.strftime('%Y-%m-%d %H:%M:%S')}
+    """
+    )
+
+    ciclo_thread = threading.Thread(target=superciclo, args=(nuevos_horarios,))
     ciclo_thread.daemon = True
     ciclo_thread.start()
 
@@ -207,17 +259,43 @@ def estado_ciclo():
             "superciclo": "--",
             "estado": "desconocido",
             "proximo": "--",
-            "hora": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            "hora": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "supercicloDiaActual": "--",
+            "supercicloDiasRestantes": "--"
         })
 
     ahora = datetime.now()
     estado, proximo_dt = calcular_estado_y_proximo(data, ahora)
 
+    dias_def = [e.get("dia") for e in data.get("eventos", []) if isinstance(e.get("dia"), int)]
+    duracion_superciclo = max(dias_def) + 1 if dias_def else 0
+
+    raw_inicio = data.get("fecha_inicio")
+    if isinstance(raw_inicio, datetime):
+        fecha_inicio = raw_inicio.date()
+    elif isinstance(raw_inicio, str):
+        try:
+            fecha_inicio = datetime.fromisoformat(raw_inicio).date()
+        except ValueError:
+            fecha_inicio = None
+    else:
+        fecha_inicio = None
+
+    if duracion_superciclo and fecha_inicio:
+        dias_transcurridos = (ahora.date() - fecha_inicio).days
+        dia_actual = (dias_transcurridos % duracion_superciclo) + 1
+        dias_restantes = duracion_superciclo - dia_actual
+    else:
+        dia_actual = "--"
+        dias_restantes = "--"
+
     return jsonify({
         "superciclo": data.get("superciclo", "--"),
         "estado": estado,
-        "proximo": proximo_dt.strftime("%Y-%m-%d %H:%M"),
-        "hora": ahora.strftime("%Y-%m-%d %H:%M:%S")
+        "proximo": proximo_dt.strftime("%Y-%m-%d %H:%M") if proximo_dt else "--",
+        "hora": ahora.strftime("%Y-%m-%d %H:%M:%S"),
+        "supercicloDiaActual": dia_actual,
+        "supercicloDiasRestantes": dias_restantes
     })
 
 
@@ -236,7 +314,8 @@ def abrir_config_ini():
             subprocess.Popen(["open", CONFIG_PATH])
         else:
             subprocess.Popen(["xdg-open", CONFIG_PATH])
-
+        logging.info("Archivo config.ini abierto.")
         return jsonify(ok=True)
     except Exception as e:
+        logging.exception("Error al abrir config.ini")
         return jsonify(ok=False, error=str(e)), 500
